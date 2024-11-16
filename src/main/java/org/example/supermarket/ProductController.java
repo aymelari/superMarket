@@ -14,12 +14,18 @@ public class ProductController {
 
     @GetMapping("/api/products/total-cost")
     public ResponseEntity<Double> totalCost() {
+
         return ResponseEntity.ok(service.TotalCost());
     }
 
 
     @PostMapping("/api/products")
     public ResponseEntity<Long> newProduct(@RequestBody ProductRequestDto productRequestDto) {
+        if(productRequestDto.getPrice()<0 ){
+            throw new IllegalArgumentException("Price must be greater than zero");
+
+
+        }
         return ResponseEntity.ok(service.createProduct(productRequestDto));
     }
 }

@@ -41,6 +41,9 @@ public class ProductService {
 
     public Double TotalCost() {
         List<Product> availableProducts = productRepository.findAvailableProducts();
+        if (availableProducts.isEmpty()) {
+            throw new RuntimeException("No products available");
+        }
         Double totalCost = 0.0;
         for (Product product : availableProducts) {
             totalCost = totalCost + product.getPrice()*product.getStock();
