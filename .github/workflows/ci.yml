@@ -15,17 +15,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Ensure token is provided for authentication
+
+      - name: Clear Gradle cache
+        run: gradle cleanBuildCache   # Clear any cached Gradle dependencies
 
       - name: Set up JDK 17 (Adoptium)
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'adoptium'   # Changed to 'adoptium'
+          distribution: 'adoptium'
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
-          path: C:\Users\runneradmin\.gradle\caches    # Update Gradle cache path for Windows
+          path: C:\Users\runneradmin\.gradle\caches    # Correct path for Windows runners
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
