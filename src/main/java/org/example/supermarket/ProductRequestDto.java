@@ -19,4 +19,7 @@ public class ProductRequestDto {
     private LocalDateTime lastModifiedDate;
     private Boolean expired;
     private Integer stock;
+
+    public ProductRequestDto(String testProduct, double v, int i) {
+    }
 }

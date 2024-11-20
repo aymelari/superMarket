@@ -28,15 +28,25 @@ public class ProductService {
     public void discount10() {
 
         LocalDateTime thresholdDate = LocalDateTime.now().minusDays(5);
-        List<Product> byLastModifiedDate = productRepository.findByLastModifiedDate(thresholdDate);
-        byLastModifiedDate.forEach(n -> n.setPrice(n.getPrice() * 0.9));
+        List<Product> products = productRepository.findByLastModifiedDate(thresholdDate);
+        products.forEach(product -> {
+            product.setPrice(product.getPrice() * 0.9);
+            System.out.println("Products to discount: " + products);
+            productRepository.save(product); // Persist the updated product
+
+
+        });
     }
 
     @Scheduled(fixedDelay = 86400000)
     public void lastModified1month() {
-        LocalDateTime callculated = LocalDateTime.now().minusMonths(1);
-        List<Product> byLastModified = productRepository.findByLastModifiedDateeBeforeAndExpiredFalse(callculated);
-        byLastModified.forEach(n -> n.setExpired(Boolean.FALSE));
+        LocalDateTime calculated = LocalDateTime.now().minusMonths(1);
+        List<Product> byLastModified = productRepository.findByLastModifiedDateeBeforeAndExpiredFalse(calculated);
+
+        byLastModified.forEach(n -> {
+            n.setExpired(Boolean.TRUE); // Mark as expired
+            productRepository.save(n);  // Persist changes to the database
+        });
     }
 
     public Double TotalCost() {
