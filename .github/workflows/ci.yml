@@ -3,14 +3,14 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - main  # Trigger on push to 'main' branch
+      - master  # Trigger on push to 'main' branch
   pull_request:
     branches:
-      - main  # Trigger on pull request to 'main' branch
+      - master  # Trigger on pull request to 'main' branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: windows-latest
 
     steps:
       # Step 1: Checkout the code from the repository
